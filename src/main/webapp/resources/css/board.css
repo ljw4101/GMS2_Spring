@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+@IMPORT url("./common.css");
+
+/* board_list */
+#board_list{ margin-top: 50px;
+		     margin-bottom: auto;
+		     margin-right: auto;
+		     margin-left: auto; 
+		     width: 70%; }
+#board_list>table{ border-collapse: collapse; width: 100%; }
+.tr_height{ height: 25px; }
+
+/* board_write */
+#add_container{ margin: auto; width: 23%; }
+#add_submit{ float: right; width: 100px; height: 25px; }
+#wrapper{ background-image: url("../img/bg_img.jpg"); }
