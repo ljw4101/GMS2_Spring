@@ -172,8 +172,6 @@ app.auth = (function(){
 	var init=function(){
 		
 		$('#loginBtn').on('click',function(){
-			alert('login fx 실행');
-
 			if($('#login_id').val() === ""){
 				alert('ID를 입력해 주세요');
 				return false;
@@ -259,6 +257,21 @@ app.navbar = (function(){
 		});
 		
 		//board
+		$('.dropdown-menu a').eq(9).on('click', function(){
+			app.controller.moveTo('board', 'board_add');
+		});
+		
+		$('.dropdown-menu a').eq(10).on('click', function(){
+			app.controller.list('board', 'board_list');
+		});
+		
+		$('.dropdown-menu a').eq(11).on('click', function(){
+			app.controller.moveTo('board', 'board_detail');
+		});
+		
+		$('.dropdown-menu a').eq(12).on('click', function(){
+			app.controller.deleteTarget('board');
+		});
 	};
 	
 	return{

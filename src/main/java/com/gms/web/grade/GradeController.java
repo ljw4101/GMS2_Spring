@@ -16,24 +16,24 @@ public class GradeController {
 	@RequestMapping("/grade_add")
 	public String addGrade(Model model) {
 		logger.info("GradeController 진입: addGrade");
-		return "grade/grade_add";
+		return "grade:grade/grade_add.tiles";
 	}
 	
 	@RequestMapping("/grade_list")
 	public String listGrade(Model model) {
 		logger.info("GradeController 진입: listGrade");
-		return "grade/grade_list";
+		return "grade:grade/grade_list.tiles";
 	}
 	
 	@RequestMapping("/grade_detail")
 	public String detailGrade(Model model) {
 		logger.info("GradeController 진입: detailGrade");
-		return "grade/grade_detail";
+		return "grade:grade/grade_detail.tiles";
 	}
 	
 	@RequestMapping("/grade_update")
 	public String updateGrade(Model model) {
 		logger.info("GradeController 진입: updateGrade");
-		return "grade/grade_update";
+		return "grade:grade/grade_update.tiles";
 	}
 }

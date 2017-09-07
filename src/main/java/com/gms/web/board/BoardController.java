@@ -16,24 +16,24 @@ private static final Logger logger = LoggerFactory.getLogger(MemberController.cl
 	@RequestMapping("/board_add")
 	public String addGrade(Model model) {
 		logger.info("BoardController 진입: addGrade");
-		return "board/board_write";
+		return "board:board/board_write.tiles";
 	}
 	
 	@RequestMapping("/board_list")
 	public String listGrade(Model model) {
 		logger.info("BoardController 진입: listGrade");
-		return "board/board_list";
+		return "board:board/board_list.tiles";
 	}
 	
 	@RequestMapping("/board_detail")
 	public String detailGrade(Model model) {
 		logger.info("BoardController 진입: detailGrade");
-		return "board/board_detail";
+		return "board:board/board_detail.tiles";
 	}
 	
 	@RequestMapping("/board_update")
 	public String updateGrade(Model model) {
 		logger.info("BoardController 진입: updateGrade");
-		return "board/board_update";
+		return "board:board/board_update.tiles";
 	}
 }

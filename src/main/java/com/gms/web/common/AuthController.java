@@ -24,6 +24,6 @@ public class AuthController {
 	@RequestMapping("/login")
 	public String login(Model model) {
 		logger.info("AuthController 진입: login");	
-		return "common/main";
+		return "auth:common/main.tiles";
 	}
 }

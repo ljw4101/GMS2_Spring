@@ -14,24 +14,24 @@ public class MemberController {
 	@RequestMapping("/mem_add")
 	public String addMember(Model model) {
 		logger.info("MemberController 진입: addMember");
-		return "member/member_add";
+		return "member:member/member_add.tiles";
 	}
 	
 	@RequestMapping("/mem_list")
 	public String listMember(Model model) {
 		logger.info("MemberController 진입: listMember");
-		return "member/member_list";
+		return "member:member/member_list.tiles";
 	}
 	
 	@RequestMapping("/mem_detail")
 	public String detailMember(Model model) {
 		logger.info("MemberController 진입: detailMember");
-		return "member/member_detail";
+		return "member:member/member_detail.tiles";
 	}
 	
 	@RequestMapping("/mem_update")
 	public String updateMember(Model model) {
 		logger.info("MemberController 진입: updateMember");
-		return "member/member_update";
+		return "member:member/member_update.tiles";
 	}
 }
