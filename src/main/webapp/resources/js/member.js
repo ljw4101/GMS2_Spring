@@ -11,7 +11,6 @@ var app=app || {};
 
 app.path=(function(){
 	var init = function(ctx){
-		alert("ctx= "+ctx);
 		app.session.init(ctx);	//내부에서 호출하면 함수처럼 사용
 		app.auth.init();
 		onCreate();
