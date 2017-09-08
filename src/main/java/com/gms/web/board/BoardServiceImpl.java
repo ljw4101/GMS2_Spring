@@ -3,8 +3,9 @@ package com.gms.web.board;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import com.gms.web.board.BoardDAO;
+
 import com.gms.web.board.ArticleDTO;
+import com.gms.web.mapper.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService{

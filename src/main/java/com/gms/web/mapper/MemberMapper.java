@@ -1,4 +1,4 @@
-package com.gms.web.member;
+package com.gms.web.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import com.gms.web.member.MemberDTO;
 import com.gms.web.member.StudDTO;
 
 @Repository
-public interface MemberDAO {
+public interface MemberMapper {
 	//setter void -> int 이유 : setter후 성공여부 반환: 오라클에서 숫자값으로 return함
 	public String insert(Map<?, ?> map);
 	public String update(MemberDTO member);	//pw

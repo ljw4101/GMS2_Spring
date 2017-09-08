@@ -1,11 +1,11 @@
-package com.gms.web.board;
+package com.gms.web.mapper;
 
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.gms.web.board.ArticleDTO;
 
 @Repository
-public interface BoardDAO {
+public interface BoardMapper {
 	//setter void -> int 이유 : setter후 성공여부 반환: 오라클에서 숫자값으로 return함
 	public String insert(ArticleDTO bean);
 	public String update(ArticleDTO bean);
