@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import com.gms.web.constant.Extension;
 import com.gms.web.constant.Path;
+import com.gms.web.member.MemberDTO;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,8 @@ public class CommandDTO implements Commandable{
 	
 	@Getter @Setter
 	protected String dir, page, startRow, endRow;
+	
+	protected MemberDTO member;
 		
 	public void setColumn(String column){
 		this.column = (column==null)?"none":column;

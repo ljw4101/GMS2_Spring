@@ -2,22 +2,43 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <!-- 
-  //setter void-> String : 사용자에게 결과후 성공여부 message 반환
-	public String addMember(Map<String, Object> map);
-	public String modifyPw(MemberDTO member);
-	public String removeMember(CommandDTO cmd);
-	//getter
-	public List<?> getMembers(CommandDTO cmd);	//목록(list): MemberBean을 배열로 담음
-	public List<?> findByName(CommandDTO cmd);
-	public StudDTO findByID(CommandDTO cmd);
-	public String countMembers(CommandDTO cmd);
-	
-	public Map<String, Object> login(MemberDTO member); //(패스워드)은닉화를 위해 bean으로 담음
-   -->
-  
   
 <mapper namespace="com.gms.web.mapper.MemberMapper">
-
-
+	<select id="count" resultType="string">
+		select count(*) as count from member
+	</select>
+	
+	<select id="login" resultType="com.gms.web.member.MemberDTO" parameterType="com.gms.web.command.CommandDTO">
+		select mem_id as id, pw from member where mem_id = #{search}
+	</select>
+	
+	<select id="selectAll" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.CommandDTO">
+		select num, id, name, ssn, email, phone, subjs, regdate 
+		from (select @rnum := @rnum +1 as num, s.* 
+				from (select @rnum := 0) r, student s
+				where name like #{search} )t <!-- column -->
+		where num between #{startRow} and #{endRow} 
+	</select>
+	
+	<select id="selectByID" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.CommandDTO">
+		select id, name, ssn, email, phone, subjs, regdate from student where id = #{search}
+	</select>
+	
+	<!-- CUD는 resultType이 없다 -->
+	<insert id="insert" parameterType="com.gms.web.member.MemberDTO">
+		insert into member(mem_id, name, pw, email, phone, regdate)
+			 values (#{id},#{name},#{pw},#{email},#{phone},SYSDATE())
+	</insert>
+	
+	<update id="update" parameterType="com.gms.web.member.MemberDTO">
+		update member set name = #{name},
+						  email = #{email},
+						  phone = #{phone},
+						  pw = #{pw}
+		where mem_id = #{id}
+	</update>
+	
+	<delete id="delete" flushCache="true" parameterType="com.gms.web.command.CommandDTO">
+		delete from member where mem_id = #{search}
+	</delete>
 </mapper>

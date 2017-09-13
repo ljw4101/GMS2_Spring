@@ -10,9 +10,11 @@
 		<h1 id="title">LOGIN</h1>
 	</header>
 	<hr />
-
 	<div id=loginImg>
 		<img src="${path.img}/login.gif" alt="" />
+	</div>
+	<div id=message style="height: 30px; width: 100%; text-align: center; color: red; font-weight: bold;">
+		${result}
 	</div>
 	<form id="login" name="login"> <!-- 1. CommonController 호출 -->
 		<span>ID: </span><input type="text" id="login_id" name="id" value="kang" /><br /><mark>ID는 숫자포함 8자이내</mark><br />
@@ -23,6 +25,7 @@
 		<input type="hidden" name="action" value="login"/>
 		<input type="hidden" name="page" value="main"/>
 	</form>
+	
 </div>
 <script>
 	app.auth.init();	

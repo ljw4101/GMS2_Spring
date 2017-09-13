@@ -92,11 +92,11 @@ app.main = (function(){
 		
 		//member
 		$('.list-group-item a').eq(0).on('click', function(){
-			app.controller.moveTo('member', 'mem_add');
+			app.controller.moveTo('member', 'member_add');
 		});
 		
 		$('.list-group-item a').eq(1).on('click', function(){
-			app.controller.list('member', 'mem_list');
+			app.controller.list('member', 'member_list', '1');
 		});
 		
 		$('.list-group-item a').eq(2).on('click', function(){
@@ -104,7 +104,7 @@ app.main = (function(){
 		});
 		
 		$('.list-group-item a').eq(3).on('click', function(){
-			app.controller.moveTo('member', 'mem_update');
+			app.controller.moveTo('member', 'member_update');
 		});
 		
 		$('.list-group-item a').eq(4).on('click', function(){
@@ -117,7 +117,7 @@ app.main = (function(){
 		});
 		
 		$('.list-group-item a').eq(6).on('click', function(){
-			app.controller.list('grade', 'grade_list');
+			app.controller.list('grade', 'grade_list','1');
 		});
 		
 		$('.list-group-item a').eq(7).on('click', function(){
@@ -135,11 +135,11 @@ app.main = (function(){
 		
 		//board
 		$('.list-group-item a').eq(10).on('click', function(){
-			app.controller.moveTo('board', 'board_add');
+			app.controller.moveTo('board', 'board_write');
 		});
 		
 		$('.list-group-item a').eq(11).on('click', function(){
-			app.controller.list('board', 'board_list');
+			app.controller.list('board', 'board_list','1');
 		});
 		
 		$('.list-group-item a').eq(12).on('click', function(){
@@ -191,6 +191,7 @@ app.auth = (function(){
 	};
 })();
 
+
 /*******************************
  * navbar
  *******************************/
@@ -216,15 +217,15 @@ app.navbar = (function(){
 		
 		//member
 		$('.dropdown-menu a').eq(0).on('click', function(){
-			app.controller.moveTo('member', 'mem_add');
+			app.controller.moveTo('member', 'member_add');
 		});
 		
 		$('.dropdown-menu a').eq(1).on('click', function(){
-			app.controller.list('member', 'mem_list');
+			app.controller.list('member', 'member_list','1');
 		});
 		
 		$('.dropdown-menu a').eq(2).on('click', function(){
-			app.controller.moveTo('member', 'mem_search');
+			app.controller.moveTo('member', 'member_search');
 		});
 		
 		$('.dropdown-menu a').eq(4).on('click', function(){
@@ -232,7 +233,7 @@ app.navbar = (function(){
 		});
 		
 		$('.active a').on('click', function(){
-			app.controller.moveTo('auth','login');
+			app.controller.moveTo('common','main');
 		});
 		
 		$logout.on('click', function(){
@@ -245,7 +246,7 @@ app.navbar = (function(){
 		});
 		
 		$('.dropdown-menu a').eq(6).on('click', function(){
-			app.controller.list('grade', 'grade_list');
+			app.controller.list('grade', 'grade_list','1');
 		});
 		
 		$('.dropdown-menu a').eq(7).on('click', function(){
@@ -258,11 +259,11 @@ app.navbar = (function(){
 		
 		//board
 		$('.dropdown-menu a').eq(9).on('click', function(){
-			app.controller.moveTo('board', 'board_add');
+			app.controller.moveTo('board', 'board_write');
 		});
 		
 		$('.dropdown-menu a').eq(10).on('click', function(){
-			app.controller.list('board', 'board_list');
+			app.controller.list('board', 'board_list','1');
 		});
 		
 		$('.dropdown-menu a').eq(11).on('click', function(){
@@ -293,11 +294,13 @@ app.member=(function(){
 	
 	var setContentView =function(){
 		$("#updateBtn").on('click', function(){
-			sessionStorage.setItem('id', $("#detailId").val());
+			/*sessionStorage.setItem('id', $("#detailId").val());
 			sessionStorage.setItem('phone', $("#detailPhone").text());
 			sessionStorage.setItem('email', $("#detailEmail").text());
-			sessionStorage.setItem('title', $("#detailTitle").text());
-			controller.moveTo('member', 'move', 'member_update');
+			sessionStorage.setItem('title', $("#detailTitle").text());*/
+			
+			
+			app.controller.moveTo('member', 'member_update');
 		});
 	};
 
@@ -353,16 +356,15 @@ app.board = (function(){
  *******************************/
 app.controller = (function(){
 	var init=function(){
-
+		
 	};
 	
-	var moveTo = function(controller, action){
-		//alert(controller+'/'+action);
-		location.href = app.path.ctx()+'/'+controller+'/'+action;
+	var moveTo = function(dir, page){
+		location.href = app.path.ctx()+'/move/'+dir+'/'+page;
 	};
 	
-	var list=function(controller, action){
-		location.href = app.path.ctx()+'/'+controller+'/'+action;
+	var list=function(controller, page, num){
+		location.href = app.path.ctx()+'/'+controller+'/'+page+'/'+num+'/null';
 	};
 	
 	var deleteTarget=function(target){
@@ -373,60 +375,67 @@ app.controller = (function(){
 		location.href = app.path.ctx()+"/auth/login_view";
 	};
 
-	
-	var searchName=function(){
-		var $search = $("#search");
+	var searchName=function(controller, page, num){
+		var $search = $("#search").val();
 		if($search === ""){
 			alert("검색할 이름을 입력하세요");
 			return false;
 		}
-		location.href = app.path.ctx()+"/member.do?action=search&page=member_list&search="+search;
+
+		location.href = app.path.ctx()+'/'+controller+'/'+page+'/'+num+'/'+$search;
 	};
 	
 	var detailStud=function(x){
-		app.controller.moveTo('member', 'mem_detail');
-		//location.href = app.path.ctx()+"/member.do?action=detail&page=member_detail&id="+x;
+		location.href = app.path.ctx()+'/member/member_detail/'+x;
 	};
 	
-	var updateStud=function(id, email){
-		alert("수정할 ID: "+id);
-		location.href= app.path.ctx()+"/member.do?action=update&page=member_update&id="+id+"&email="+email;
+	var updateStud=function(){
+		$('#confirmBtn').on('click',function(){
+			if($("#pw").val() === $("#confirm").val()){
+				$('#updateForm').attr('action', app.path.ctx()+'/student/update');
+				$('#updateForm').attr('method','post');
+				return true;
+			}else{
+				alert('입력 비밀번호가 서로 다릅니다.');
+		        return false;	
+			}
+		});
 	};
 	
-	var deleteStud=function(id){
-		alert("삭제할 ID: "+id);
-		location.href = app.path.ctx()+"/member.do?action=delete&page=member_list&id="+id;
+	var deleteStud=function(x){
+		alert("삭제할 ID: "+x);
+		location.href = app.path.ctx()+'/member/member_delete/'+x;
 	};
 	
 	var memberAdd=function(){
-		var $mem_id = $("#id");
-		var $mem_pw = $("#pw");
-		var $mem_name = $("#name");
-		var $mem_birth = $("#birth");
 		
-		if($mem_id === ""){
-			alert('ID를 입력해 주세요');
-			return false;
-		}
-		if($mem_pw === ""){
-			alert('PASSWORD를 입력해 주세요');
-			return false;
-		}
-		if($mem_name === ""){
-			alert('NAME를 입력해 주세요');
-			return false;
-		}
-		if($mem_birth === ""){
-			alert('BIRTH를 입력해 주세요');
-			return false;
-		}
-		
-		var $form = $("#join_form");
-		
-		$('#login').attr('action', app.path.ctx()+"/member.do");
-		$('#login').attr('method', 'post');
-	
-		// $form.submit();
+		$('#join_yes_btn').on('click',function(){
+			var $mem_id = $("#id").val();
+			var $mem_pw = $("#pw").val();
+			var $mem_name = $("#name").val();
+			var $mem_birth = $("#birthday").val();
+			
+			if($mem_id === ""){
+				alert('ID를 입력해 주세요');
+				return false;
+			}
+			if($mem_pw === ""){
+				alert('PASSWORD를 입력해 주세요');
+				return false;
+			}
+			if($mem_name === ""){
+				alert('NAME를 입력해 주세요');
+				return false;
+			}
+			if($mem_birth === ""){
+				alert('BIRTH를 입력해 주세요');
+				return false;
+			}
+			
+			$('#join_form').attr('action', app.path.ctx()+'/member/member_add');
+			$('#join_form').attr('method', 'post');
+			return true;
+		});
 	};
 	
 	return{
@@ -435,7 +444,6 @@ app.controller = (function(){
 		list : list,
 		deleteTarget : deleteTarget,
 		logoutAction: logoutAction,
-		//goMain : goMain,
 		searchName : searchName,
 		detailStud : detailStud,
 		updateStud : updateStud,

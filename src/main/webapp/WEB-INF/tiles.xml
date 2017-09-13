@@ -10,7 +10,7 @@
 	</definition>
 	<definition name="public:*/*.tiles" extends="public">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
-	</definition>
+	</definition>	
 	
 	<definition name="auth" template="/WEB-INF/views/common/layout.jsp">
 		<put-attribute name="title" value=""></put-attribute>
@@ -22,34 +22,13 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="member" template="/WEB-INF/views/common/layout.jsp">
+	<definition name="move" template="/WEB-INF/views/common/layout.jsp">
 		<put-attribute name="title" value=""></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/common/navbar.jsp" />
 		<put-attribute name="content" value=""></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
 	</definition>
-	<definition name="member:*/*.tiles" extends="member">
+	<definition name="move:*/*.tiles" extends="move">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
 	</definition>
-	
-	<definition name="grade" template="/WEB-INF/views/common/layout.jsp">
-		<put-attribute name="title" value=""></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/common/navbar.jsp" />
-		<put-attribute name="content" value=""></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
-	</definition>
-	<definition name="grade:*/*.tiles" extends="grade">
-		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
-	</definition>
-	
-	<definition name="board" template="/WEB-INF/views/common/layout.jsp">
-		<put-attribute name="title" value=""></put-attribute>
-		<put-attribute name="header" value="/WEB-INF/views/common/navbar.jsp" />
-		<put-attribute name="content" value=""></put-attribute>
-		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
-	</definition>
-	<definition name="board:*/*.tiles" extends="board">
-		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
-	</definition>
-	
 </tiles-definitions>

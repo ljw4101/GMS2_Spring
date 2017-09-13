@@ -11,8 +11,8 @@
 	      </div>
 	      <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9">
 	        <div class="" style="border-bottom:1px solid black">
-	          <span style="font-size: 50px">${requestScope.stud.name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-	          <button id="updateBtn">정보수정</button>
+	          <span style="font-size: 50px">${stud.name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	          <button id="updateBtn" onclick="app.controller.moveTo('member','member_update')">정보수정</button>
 	        </div>
 	        <hr>
 	        <div class="col-md-6">  
@@ -20,24 +20,24 @@
 	            <li>
 	              <p id="detailNum">
 	                <span class="glyphicon glyphicon-credit-card one" style="width:50px;"></span>
-	                  # ${requestScope.stud.id}
+	                  # ${stud.id}
 	               </p>
 	            </li>
 	            <li> <!-- num, id, name, ssn, regdate, phone, email, title -->
 	              <p id="detailEmail">
 	                <span class="glyphicon glyphicon-envelope one" style="width:50px;"></span>
-	                  ${requestScope.stud.email}
+	                  ${stud.email}
 	              </p>
 	            </li>
 	            <li> 
 	              <p id="detailSSN"><span class="glyphicon glyphicon-bold" style="width:50px;"></span>
-	                  ${requestScope.stud.ssn}
+	                  ${stud.ssn}
 	              </p>
 	            </li>
 	            <li>  
 	              <p id="detailPhone">
 	                  <span class="glyphicon glyphicon-earphone one" style="width:50px;"></span>
-	                  ${requestScope.stud.phone}
+	                  ${stud.phone}
 	                </p>
 	            </li>
 	          </ul>
@@ -45,11 +45,11 @@
 	        <div class="col-md-6">  
 	          <p id="detailRegdate">
 	            <span class="glyphicon glyphicon-calendar one" style="width:50px;"></span>
-	            ${requestScope.stud.regdate}
+	            ${stud.regdate}
 	          </p>
 	          <p id="detailTitle">
 	            <span class="glyphicon glyphicon-blackboard" style="width:50px;"></span>
-	            ${requestScope.stud.title}
+	            ${stud.title}
 	          </p>
 	          <%-- <div class="col-sm-5 col-xs-6 tital " >Gender:</div>
 	          <div class="col-sm-7 col-xs-6 ">${requestScope.student.ssn}</div>
@@ -61,7 +61,7 @@
 	          <div class="bot-border"></div> --%>
 	        </div>
 	        <div>
-	        	<input id="detailId" type="hidden" value="${requestScope.stud.id}" />
+	        	<input id="detailId" type="hidden" value="${stud.id}" />
 	        </div>
 	      </div>
 	    </div>
@@ -112,7 +112,7 @@
 	  </div>
 	</div>
    <script>
-   		memDetail.init();
+  		//app.member.init();
    </script>
 
 <jsp:include page="../common/footer.jsp" />

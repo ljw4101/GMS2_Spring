@@ -4,16 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gms.web.command.CommandDTO;
 import com.gms.web.grade.MajorDTO;
+import com.gms.web.mapper.MemberMapper;
 import com.gms.web.member.MemberDTO;
 import com.gms.web.member.StudDTO;
 import com.gms.web.member.MemberService;
 
 @Service
 public class MemberServiceImpl implements MemberService{
+	private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+	@Autowired MemberMapper mapper;
+	@Autowired MemberDTO member;
 	
 	//public static MemberServiceImpl instance = new MemberServiceImpl();	
 	public static MemberServiceImpl getInstance() {
@@ -22,36 +29,34 @@ public class MemberServiceImpl implements MemberService{
 	private MemberServiceImpl(){}
 	
 	@Override
-	public String addMember(Map<String, Object> map) {
+	public int addMember(Map<String, Object> map) {
 		System.out.println("member service 진입");
-		MemberDTO m=(MemberDTO)map.get("member");
 		
-		System.out.println("넘어온 회원 정보:"+m.toString());
-		@SuppressWarnings("unchecked")
+		MemberDTO bean = (MemberDTO)map.get("member");
+		System.out.println("넘어온 회원 정보:"+bean.toString());
 		
+		/*@SuppressWarnings("unchecked")
 		List<MajorDTO>list=(List<MajorDTO>)map.get("major");
-		System.out.println("넘어온 수강과목:"+list);
+		System.out.println("넘어온 수강과목:"+list);*/
 		
-		return null;
+		return mapper.insert(bean); //map
 	}
 
 	@Override
 	public List<?> getMembers(CommandDTO cmd) {
-		return null;
+		return mapper.selectAll(cmd);
 	}
 
 	@Override
-	public String countMembers(CommandDTO cmd) {
-		System.out.println("***count***");
-		return null;
+	public String count() {
+		String count = mapper.count();
+		logger.info("coutn is {}", count);
+		return count;
 	}
 
 	@Override
 	public StudDTO findByID(CommandDTO cmd) {
-		StudDTO member = new StudDTO();
-		member = null;
-		
-		return member;
+		return mapper.selectByID(cmd);
 	}
 
 	@Override
@@ -61,36 +66,41 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String modifyPw(MemberDTO bean) {
-
-		String msg="";
-		MemberDTO member = new MemberDTO();
-		String rs = null;
-		msg = (rs.equals("1"))?"update 성공":"update 실패";
-		
-		return msg;
+	public int modify(MemberDTO bean) {		
+		return mapper.update(bean);
 	}
 
+	
 	@Override
-	public String removeMember(CommandDTO cmd) {
-		String msg="";
-		String rs = null;
-		msg = (rs.equals("1"))?"delete 성공":"delete 실패";
-		
-		return msg;
+	public int removeMember(CommandDTO cmd) {
+		return mapper.delete(cmd);
 	}
+	
+	
 	@Override
-	public Map<String, Object> login(MemberDTO member) {	
+	public Map<String, Object> login(CommandDTO cmd) {	
 		Map<String, Object> map = new HashMap<>();
-		CommandDTO cmd = new CommandDTO();
-		cmd.setSearch(member.getId());
+		member = mapper.login(cmd);
 		
-		MemberDTO m = null;
+		String page="", result="";
+		if(member!=null){
+			if(member.getPw().equals(cmd.getAction())) {
+				page = "auth:common/main.tiles";
+				result = "success";
+			}else {
+				page = "auth:common/login.tiles";
+				result = "비밀번호가 틀렸습니다.";
+			}
+		}else {
+			page = "auth:common/join.tiles";
+			result = "회원가입이 필요합니다.";
+		}
+		 
+		System.out.println("result== "+result);
 		
-		String page = (m!=null)?(m.getPw().equals(member.getPw()))?"main":"login_fail":"join";
-		
+		map.put("result", result);
 		map.put("page", page);
-		map.put("user", m);
+		map.put("user", member);
 		
 		return map;
 	}

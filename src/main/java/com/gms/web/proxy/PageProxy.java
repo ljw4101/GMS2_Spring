@@ -1,28 +1,23 @@
 package com.gms.web.proxy;
 
 import java.util.List;
-import lombok.Setter;
-import lombok.Getter;
-import javax.servlet.http.HttpServletRequest;
+import lombok.Data;
 
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
-@Component
-public class PageProxy extends Proxy{
+@Data @Component
+public class PageProxy{
 	
-	@Getter @Setter protected int pageSize, blockSize, theNumberOfRows, pageNumber;
+	private int pageSize, blockSize, theNumberOfRows, pageNumber;
 	
-	public PageProxy(HttpServletRequest request){
-		super(request);
-	}
-	
-	public void execute(int[] arr, List<?>list){
-		request.setAttribute("pageNumber", arr[0]);
-		request.setAttribute("theNumberOfPages", arr[1]);
-		request.setAttribute("startPage", arr[2]);
-		request.setAttribute("endPage", arr[3]);
-		request.setAttribute("prevBlock", arr[4]);
-		request.setAttribute("nextBlock", arr[5]);
-		request.setAttribute("list", list);
+	public void execute(Model model, int[] arr, List<?>list){
+		model.addAttribute("pageNumber", arr[0]);
+		model.addAttribute("theNumberOfPages", arr[1]);
+		model.addAttribute("startPage", arr[2]);
+		model.addAttribute("endPage", arr[3]);
+		model.addAttribute("prevBlock", arr[4]);
+		model.addAttribute("nextBlock", arr[5]);
+		model.addAttribute("list", list);
 	}
 }

@@ -41,7 +41,7 @@
       	 </ul>	
       </li>
     </ul>
-    <span id="com_head">${sessionScope.user.name}&nbsp;<a id="logout">로그아웃</a></span>
+    <span id="com_head">${user.id}&nbsp;<a id="logout">로그아웃</a></span>
   </div>
 </nav>
 <script>

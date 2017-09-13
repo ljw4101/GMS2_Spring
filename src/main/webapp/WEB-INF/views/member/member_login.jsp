@@ -4,6 +4,7 @@
 	<div id=loginImg>
 		<img src="${ctx}/img/login.gif" alt="" />
 	</div>
+	<div style="height: 50px;">${result}</div>
 	<div id=login>
 		<span>ID: </span><input type="text"  /><br /><mark>ID는 숫자포함 8자이내</mark><br />
 		

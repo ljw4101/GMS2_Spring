@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+	<div id=message style="height: 30px; width: 100%; text-align: center; color: red; font-weight: bold;">
+		${result}
+	</div>
 <hr />
 	<div id=join_container class="margin-auto">
-		<form id="join_form" onsubmit="memberAdd()" class="with-100pro"> <!-- post 방식  -->
+		<form id="join_form" class="with-100pro">
 		<fieldset>
 		<legend>Personal information:</legend>
 		<span>ID: </span>
@@ -12,7 +14,7 @@
 		<span>NAME: </span>
 		<input id="name" name="name" type="text" placeholder="이름"/><br />		
 		<span>BirthDay: </span> 
-		<input id="birth" name="birth" type="date" value="2000-05-05"/><br />
+		<input id="birthday" name="birthday" type="date" value="2000-05-05"/><br />
 		<span>Gender: </span> 
 		<input type="radio" name="gender" value="male" checked> Male
 		<input type="radio" name="gender" value="female"> Female <br />
@@ -44,5 +46,8 @@
 		<input id="join_no_btn" type="reset" value="취소" class="gms-background-red join-button" />
 		</form>
 	</div>
-
+	
+	<script>
+		app.controller.memberAdd();
+	</script>
 <jsp:include page="../common/footer.jsp" />
