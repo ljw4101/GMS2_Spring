@@ -11,11 +11,9 @@ import com.gms.web.member.StudDTO;
 
 @Repository
 public interface MemberMapper {
-	//setter void -> int 이유 : setter후 성공여부 반환: 오라클에서 숫자값으로 return함
-	//public int insert(Map<?, ?> map);
 	public int insert(MemberDTO member);
-	public int update(MemberDTO member);	//pw
-	public int delete(CommandDTO cmd);			//id
+	public int update(MemberDTO member);
+	public int delete(CommandDTO cmd);
 	//getter
 	public List<?> selectAll(CommandDTO cmd);
 	public String count();

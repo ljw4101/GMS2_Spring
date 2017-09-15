@@ -41,7 +41,7 @@
 				<td>${i.ssn}</td>
 				<td>${i.phone}</td>
 				<td>${i.email}</td>
-				<td>${i.title}</td>
+				<td>${i.subjs}</td>
 				<td>${i.regdate}</td>
 				<td>
 					<a onclick="app.controller.updateStud('${i.id}')">수정</a>

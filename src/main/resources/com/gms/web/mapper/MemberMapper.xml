@@ -2,7 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
+<!-- HW에 있는 static file -->  
 <mapper namespace="com.gms.web.mapper.MemberMapper">
 	<select id="count" resultType="string">
 		select count(*) as count from member
@@ -26,8 +27,8 @@
 	
 	<!-- CUD는 resultType이 없다 -->
 	<insert id="insert" parameterType="com.gms.web.member.MemberDTO">
-		insert into member(mem_id, name, pw, email, phone, regdate)
-			 values (#{id},#{name},#{pw},#{email},#{phone},SYSDATE())
+		insert into member(mem_id, name, pw, email, phone, profile, regdate)
+			 values (#{id},#{name},#{pw},#{email},#{phone},#{profile},now())
 	</insert>
 	
 	<update id="update" parameterType="com.gms.web.member.MemberDTO">

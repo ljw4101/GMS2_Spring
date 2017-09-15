@@ -1,5 +1,6 @@
 package com.gms.web.member;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.gms.web.command.CommandDTO;
 import com.gms.web.compiex.PathFactory;
+import com.gms.web.grade.GradeService;
+import com.gms.web.grade.MajorDTO;
 import com.gms.web.proxy.BlockHandler;
 import com.gms.web.proxy.PageHandler;
 import com.gms.web.proxy.PageProxy;
@@ -29,10 +33,13 @@ import com.gms.web.proxy.PageProxy;
 public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberService service;
+	@Autowired GradeService gService;
 	@Autowired CommandDTO cmd;
 	@Autowired BlockHandler blockHandler;
 	@Autowired PageHandler pageHandler;
 	@Autowired PageProxy pxy;
+	@Autowired MemberDTO member;
+	
 	
 	@RequestMapping("/member_list/{num}/{param}")
 	public String listMember(Model model, @PathVariable String num, @PathVariable String param) {
@@ -91,14 +98,27 @@ public class MemberController {
 	}
 	
 	
-	@RequestMapping("/member_add")
-	public String addMember(@ModelAttribute MemberDTO member) {
+	@RequestMapping(value="/member_add", method=RequestMethod.POST)
+	public String addMember(@ModelAttribute MemberDTO member, @RequestParam("subject") List<String> list) {
 		logger.info("MemberController 진입: addMember");
+		logger.info(member.getId()+"/"+member.getName()+"/"+member.getPw()+"/"+list);
 		
-		Map<String,Object> map = new HashMap<>();
-		map.put("member", member);
-		//map.put("major", list);
-		service.addMember(map);
+		member.setProfile(member.getId()+".jpg");
+		Map<String,Object> parammap = new HashMap<>();
+		parammap.put("member", member);
+		
+		List<MajorDTO> paramList = new ArrayList<>();
+		MajorDTO major = null;
+		for(String m:list) {
+			major = new MajorDTO();
+			//major.setMajorId(String.valueOf((int)(Math.random()*9999)+ 1000));
+			major.setMemId(member.getId());
+			major.setSubjId(m);
+			major.setTitle(member.getId()+"/"+m);
+			paramList.add(major);
+		}
+		parammap.put("major", paramList);
+		service.addMember(parammap);
 
 		return "redirect:/member/member_list/1/null";
 	}

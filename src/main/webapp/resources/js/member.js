@@ -286,6 +286,7 @@ app.navbar = (function(){
 app.member=(function(){
 	var init=function(){
 		onCreate();
+		app.controller.memberAdd();
 	};
 	
 	var onCreate=function(){

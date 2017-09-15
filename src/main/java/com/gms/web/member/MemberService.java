@@ -11,7 +11,7 @@ import com.gms.web.member.StudDTO;
 @Component
 public interface MemberService {
 	//setter void-> String : 사용자에게 결과후 성공여부 message 반환
-	public int addMember(Map<String, Object> map);
+	public int addMember(Map<?,?> map);
 	public int modify(MemberDTO member);
 	public int removeMember(CommandDTO cmd);
 	//getter

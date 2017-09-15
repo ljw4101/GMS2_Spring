@@ -48,6 +48,6 @@
 	</div>
 	
 	<script>
-		app.controller.memberAdd();
+		app.member.init();
 	</script>
 <jsp:include page="../common/footer.jsp" />

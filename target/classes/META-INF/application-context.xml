@@ -21,7 +21,13 @@
 	<context:annotation-config />
 	<!-- <beans:beans>구조를 사용하지 않기 위해서 servlet-context.xml 내용을 가져옴 & servlet-context.xml은 지운다 -->
 	<mvc:annotation-driven />
+	<tx:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- 트랜잭션 관리자 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 	
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="viewResolvers">
@@ -62,8 +68,5 @@
 	</bean>
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
-	</bean>
-	<bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
 	</bean>
 </beans>
