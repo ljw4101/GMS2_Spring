@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.websocket.Session;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,9 @@ import com.gms.web.grade.MajorDTO;
 import com.gms.web.proxy.BlockHandler;
 import com.gms.web.proxy.PageHandler;
 import com.gms.web.proxy.PageProxy;
+
+
+
 
 @Controller //context 객체가 스캔해서 springbean으로 만듦 - context 내부에 위치
 @SessionAttributes("stud")
