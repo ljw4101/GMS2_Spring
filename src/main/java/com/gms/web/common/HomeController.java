@@ -32,7 +32,7 @@ public class HomeController {
 		model.addAttribute("serverTime", new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss").format(new Date()));
 		model.addAttribute("path", PathFactory.create());
 		
-		return "public:common/home.tiles";  //home.jsp를 의미 : Command패턴 
+		return "index";  //home.jsp를 의미 : Command패턴  //index
 		//->application-context.xml 에서 Tiles를 먼저 작동하독 함
 	}
 }
