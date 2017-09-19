@@ -8,8 +8,6 @@ meta.common=(function(){
 	
 	return {init : init}
 })();
-
-
 //var name=()();  /*IIFE*/
 
 
@@ -18,7 +16,7 @@ meta.common=(function(){
  * loading.gif
  *******************************/
 meta.index=(function(){
-	var $wrapper, ctx, img;
+	var $wrapper, $navbar, $container, ctx, img;
 	var init = function(){
 		onCreate();
 		meta.ui.init();
@@ -27,45 +25,66 @@ meta.index=(function(){
 	var onCreate = function(){
 		setContextView();
 		
-		$('#btn_load').on('click', function(){
+		$('#btn_load').click(()=>{
 			alert('click click');
-			$wrapper.empty();
+			$container.empty();
 			//meta.auth.init();
 			meta.ui.navbar();
-			meta.ui.arithmetic();
-			$('#arithBtn').on('click', function(){
-				alert("arithBtn");
-				$('#content').empty();
-				meta.ui.arithmetic();
-				$('#result_btn').on('click', function(){
-					$('#result_msg').text("결과보기: "+meta.algo.arithmetic($('#startVal').val(), $('#EndVal').val()));
+			meta.ui.drowView();
+			$('#arithBtn').click(()=>{
+				$('#container').empty();
+				meta.ui.drowView();
+				$('#title').text('시작값부터 끝값까지 등차수열 합!!');
+				$('#result_btn').click(()=>{
+					$('#result_msg').text("결과보기: "+meta.algo.arithmetic($('#startVal').val(), $('#endVal').val()));
 				});
 			});
-			$('#switchBtn').on('click', function(){
-				alert("switchBtn");
-				$('#content').empty();
-				meta.ui.switchSeries();
-				$('#result_btn').on('click', function(){
-					$('#result_msg').text("결과보기: "+meta.algo.switchSeries($('#startVal').val(), $('#EndVal').val()));
+			$('#switchBtn').click(()=>{
+				$('#container').empty();
+				meta.ui.drowView();
+				$('#title').text('시작값부터 끝값까지 스위치수열 합!!');
+				$('#startVal').val('1').attr('readonly', 'true');
+				$('#endVal').val('100').attr('readonly', 'true');
+				
+				$('#result_btn').click(()=>{
+					$('#result_msg').text("결과보기: "+meta.algo.switchSeries($('#startVal').val(), $('#endVal').val()));
 				});
 			});
-			$('#geoBtn').on('click', function(){
-				alert("geoBtn");
-				$('#content').empty();
+			$('#geoBtn').click(()=>{
+				$('#container').empty();
+				meta.ui.drowView();
+				$('#title').text('시작값부터 끝값까지 계차수열 합!!');
+				$('#startVal').val('1').attr('readonly', 'true');
+				$('#result_btn').click(()=>{
+					$('#result_msg').text("결과보기: "+meta.algo.geoSeries($('#endVal').val()));
+				});
+				
 			});
-			$('#facBtn').on('click', function(){
-				alert("facBtn");
-				$('#content').empty();
+			$('#facBtn').click(()=>{
+				$('#container').empty();
+				meta.ui.drowView();
+				$('#title').text('시작값부터 끝값까지 팩토리얼 합!!');
+				$('#startVal').val('1').attr('readonly', 'true');
+				$('#endVal').val('10').attr('readonly', 'true');
+				$('#result_btn').click(()=>{
+					$('#result_msg').text("결과보기: "+meta.algo.factorial($('#startVal').val(), $('#endVal').val()));
+				});
 			});
-			$('#fiboBtn').on('click', function(){
-				alert("fiboBtn");
-				$('#content').empty();
+			$('#fiboBtn').click(()=>{
+				$('#container').empty();
+				meta.ui.drowView();
+				$('#title').text('시작값부터 끝값까지 피보나치 합!!');
+				$('#startVal').val('1').attr('readonly', 'true');
+				$('#endVal').val('20').attr('readonly', 'true');
+				$('#result_btn').click(()=>{
+					$('#result_msg').text("결과보기: "+meta.algo.fibonacci($('#startVal').val(), $('#endVal').val()));
+				});
 			});
 		});
 	};
 	
 	var setContextView = function(){
-		$wrapper=$('#wrapper');
+		$container=$('#container');
 		ctx = $$('x');
 		img = $$('i');
 		//DOM객체
@@ -80,10 +99,8 @@ meta.index=(function(){
 					type: 'button',
 					value: '버튼'
 				});
-		
-		//appendTo = overloading 개념
-		$wrapper.append($image);
-		$wrapper.append($btn);
+		$container.append($image);
+		$container.append($btn);
 	};
 
 	return {init : init};
@@ -94,14 +111,16 @@ meta.index=(function(){
  * algo
  *******************************/
 meta.ui = (function(){
-	var $wrapper, ctx, img, js, css;
+	var $wrapper, $navbar, $container, ctx, img, js, css;
 	var init = function(){ 
 		$wrapper = $('#wrapper');
+		$navbar = $('#navbar');
+		$container = $('#container');
 		img = $$('i');
 	};
 	
 	var navbar = function(){
-		$wrapper.html(
+		$navbar.html(
 			'<nav class="navbar navbar-inverse">'
 			+ '  <div class="container-fluid">'
 			+ '    <div class="navbar-header">'
@@ -159,24 +178,17 @@ meta.ui = (function(){
 			+ '	</nav>');
 	};
 	
-	
-	var drowView = function(x){
+	var drowView = function(){	
 		var ui =
 			'<div id="content">'
-			if(x=="arith"){
-				alert(1);
-				ui = ui + '<h3>시작값부터 끝값까지 등차수열 합</h3><br/>'
-			}else if(x=="switch"){
-				alert(2);
-				ui = ui + '<h3>시작값부터 끝값까지 스위치수열 합</h3><br/>'
-			}
-			ui = ui + '<lable id="startLable">시작값:&nbsp&nbsp</lable>'
+			+ '<h3 id="title">시작값부터 끝값까지 등차수열 합</h3><br/>'
+			+ '<lable id="startLable">시작값:&nbsp&nbsp</lable>'
 			+ '<br/>'
 			+ '<lable id="endLable">끝값: &nbsp&nbsp&nbsp&nbsp</lable>'
 			+ '<br/>'
 			+ '<lable id="result_msg">'
 			+ '<div>';
-		$wrapper.append(ui);
+		$('#container').html(ui);
 		
 		$('#startLable').after(meta.comp.input(
 				{
@@ -186,11 +198,11 @@ meta.ui = (function(){
 			));
 		$('#endLable').after(meta.comp.input(
 				{
-					id : 'EndVal',
+					id : 'endVal',
 					type : 'text',
 				}
 			));
-		$('#EndVal').after(meta.comp.input(
+		$('#endVal').after(meta.comp.input(
 				{
 					id : 'result_btn',
 					type : 'button',
@@ -199,25 +211,16 @@ meta.ui = (function(){
 			));
 	};
 	
-	var arithmetic = function(){
-		drowView("arith");
-	};
-	
-	var switchSeries = function(){
-		drowView("switch");
-	};
-	
 	return {
 		init : init,
-		arithmetic : arithmetic,
-		switchSeries : switchSeries,
-		navbar : navbar
+		navbar : navbar,
+		drowView : drowView
 	};
 })();
 
 
 meta.algo={
-	arithmetic : function(s, e){
+	arithmetic : (s, e)=>{
 		var start = s*1;
 		var end = e*1;
 		
@@ -229,18 +232,66 @@ meta.algo={
 		return sum;
 	},
 	
-	switchSeries : function(s, e){
+	switchSeries : ()=>{
+		var i=0, sum=0, sw=0;
+        
+        do {
+           if(sw==0){
+              sum=sum+i;
+              sw=1;
+           }else {
+              sum=sum-i;
+              sw=0;
+           }
+           i=i+1;
+           
+        }while(i<100);
+        
+        return sum;
+	},
+	
+	geoSeries : x=>{
+		var sum=0, seq=0;
+		for(var i=1; i<=(x*1); i++){
+			if(i==1){
+				seq = i;
+			}else{
+				seq = seq+i;
+			}
+			sum += seq;
+		}
+		
+		return sum;
+	},
+	
+	factorial : (s,e)=>{
+		var sum=0;
 		var start = s*1;
 		var end = e*1;
-		var sum=0;
 		
-		for(var i=start;i<=end;i++){
-			if(i%2 != 0){
-				sum += i;
-			}else{
-				sum -= i;
+		for(var i=start; i<=end; i++){
+			var fac=1;
+			for(var j=start; j<=i; j++){
+				fac = fac * j;
 			}
+			sum += fac;
 		}
+		return sum;
+	},
+	
+	fibonacci : (s,e)=>{
+		var fir=1, sec=1, thir=0;
+		var sum = fir + sec;
+		var start = s*1;
+		var end = e*1;
+		
+		for(var i=start+2; i<=end; i++){
+			thir = fir + sec;
+			sum += thir;
+			fir = sec;
+			sec = thir;
+		}
+		
 		return sum;
 	}
 };
@@ -281,7 +332,7 @@ meta.auth=(function(){
 			+ '</form>'	
 			+ '</div>';
 		
-		$wrapper.append(ui);
+		$wrapper.html(ui);
 		$('#login').append(meta.comp.input(
 				{
 					id : 'login_btn',
