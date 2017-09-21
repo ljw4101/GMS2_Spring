@@ -1,17 +1,9 @@
 var compUI={
-	image : (x,y)=>{
-		return $('<img/>',{
-			id : x,
-			src : y
-		});
-	},
-	input : (x,y,z)=>{
-		return $('<input/>',{
-			id : x,
-			type : y,
-			value : z
-		});
-	}
+	div : x=>{return $('<div/>',{ id : x });},
+	image : (x,y)=>{return $('<img/>',{ id : x, src : y });},
+	input : (x,y,z)=>{return $('<input/>',{ id : x, type : y, value : z });},
+	h1 : x=>{return $('<h3/>',{ id : x });},
+	span : x=>{return $('<span/>',{ id : x });}
 }
 
 var introUI={
@@ -67,6 +59,37 @@ var introUI={
 				+ '	     	 	<li><a id="fiboBtn">피보나치</a></li>'
 				+ '	     	 </ul>'
 				+ '	     </li>'
+				+ '	     <li class="dropdown">'
+				+ '	     	 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' 
+				+ '	     	 <span class="center">배  열</span></a>'
+				+ '	     	 <ul id="nab_ul_seq" class="dropdown-menu">'
+				+ '	     	 	<li><a id="selBtn">선택정렬</a></li>'
+				+ '	     	 	<li><a id="burbleBtn">버블정렬</a></li>'
+				+ '	     	 	<li><a id="insertBtn">삽입정렬</a></li>'
+				+ '	     	 	<li><a id="rankBtn">석차구하기</a></li>'
+				+ '	     	 	<li><a id="binSearchBtn">이분검색</a></li>'
+				+ '	     	 	<li><a id="mergeBtn">병합</a></li>'
+				+ '	     	 	<li><a id="stackBtn">스택</a></li>'
+				+ '	     	 </ul>'
+				+ '	     </li>'
+				+ '	     <li class="dropdown">'
+				+ '	     	 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' 
+				+ '	     	 <span class="center">행  열</span></a>'
+				+ '	     	 <ul id="nab_ul_seq" class="dropdown-menu">'
+				+ '	     	 	<li><a id="Btn_1">기본 5행 5열</a></li>'
+				+ '	     	 	<li><a id="Btn_2">직각삼각형</a></li>'
+				+ '	     	 	<li><a id="Btn_3">지그재그</a></li>'
+				+ '	     	 	<li><a id="Btn_4">다이아몬드</a></li>'
+				+ '	     	 	<li><a id="Btn_5">모래시계</a></li>'
+				+ '	     	 	<li><a id="Btn_6">오른쪽 빈삼각형</a></li>'
+				+ '	     	 	<li><a id="Btn_7">이등변 삼각형</a></li>'
+				+ '	     	 	<li><a id="Btn_8">90도 회전</a></li>'
+				+ '	     	 	<li><a id="Btn_9">달팽이</a></li>'
+				+ '	     	 	<li><a id="Btn_10">대각선채우기</a></li>'
+				+ '	     	 	<li><a id="Btn_11">마방진</a></li>'
+				+ '	     	 	<li><a id="Btn_12">행렬변환</a></li>'
+				+ '	     	 </ul>'
+				+ '	     </li>'
 				+ '	   </ul>'
 				+ '	   <span id="com_head">${user.id}&nbsp;<a id="logout">로그아웃</a></span>'
 				+ '	 </div>'
@@ -97,6 +120,16 @@ var algoUI = {
 				+ '<lable id="endLable">끝값: &nbsp&nbsp&nbsp&nbsp</lable>'
 				+ '<br/>'
 				+ '<lable id="result_msg">'
+				+ '<div>';
+		},
+		sort : ()=>{
+			return '<div id="content">'
+				+ '<h3 id="title" /><br/>'
+				+ '<lable id="inputLbl">입력값:&nbsp&nbsp</lable>'
+				+ '<br/>'
+				+ '<lable id="input_val" />'
+				+ '<br/>'
+				+ '<lable id="res_sort" />'
 				+ '<div>';
 		}
 };

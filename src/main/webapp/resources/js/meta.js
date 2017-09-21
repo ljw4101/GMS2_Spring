@@ -31,24 +31,49 @@ meta.index=(function(){
 	var onCreate = function(){
 		//setContextView(); 이벤트와 $.getScript scope이 달라서 onCreate에 하나로 작동하게 함
 		$.getScript(temp, ()=>{
+			$container.append(compUI.div('content'));
+			$('#content').css({'margin': 'auto', 'width': '40%'});
+			
 			var $image = compUI.image('loading', img+'/loading.gif');
-			$container.append($image);
+			$('#content').append($image);
 			
-			var $btn = compUI.input('btn_load', 'button', '버튼');
-			$('#loading').after($btn);
+			$('#loading').after(compUI.h1('h-btn'));
+			$('#h-btn').append(compUI.span('btn_load')).attr('displsy','inline');
+			$('#btn_load').html('버튼').addClass('label label-info');
 			
-			$('#btn_load').click(()=>{
-				alert('click click');
+			$('#h-btn').append(compUI.span('algoBtn')).attr('displsy','inline');
+			$('#algoBtn').html('알고리즘').addClass('label label-default').css({'margin-left':'10px'});
+			$('#h-btn').append(compUI.span('membtn')).attr('displsy','inline');
+			$('#membtn').html('회원관리').addClass('label label-primary').css({'margin-left':'10px'});
+			$('#h-btn').append(compUI.span('boardbtn')).attr('displsy','inline');
+			$('#boardbtn').html('게시판').addClass('label label-success').css({'margin-left':'10px'});
+			$('#h-btn').append(compUI.span('btn5')).attr('displsy','inline');
+			$('#btn5').html('버튼').addClass('label label-warning').css({'margin-left':'10px'});
+			$('#h-btn').append(compUI.span('btn6')).attr('displsy','inline');
+			$('#btn6').html('버튼').addClass('label label-danger').css({'margin-left':'10px'});
+			
+			$('#algoBtn').click(()=>{
 				$container.empty();
-				//meta.auth.init();
 				meta.navbar.init();
-				//meta.ui.init();
 				
 				$('#result_btn').click(()=>{
 					$.getScript(algo, ()=>{
 						$('#result_msg').text("결과보기: "+series.arithmetic($('#startVal').val(), $('#endVal').val()));
 					});
 				});
+			});
+			$('#membtn').click(()=>{
+				$container.empty();
+				meta.auth.init();
+				
+				$('#login_btn').click(()=>{
+					alert('로그인');
+				});
+			});
+			$('#boardbtn').click(()=>{
+				alert('board');
+				$container.empty();
+				//meta.navbar.init();
 			});
 		});
 	};
@@ -157,6 +182,7 @@ meta.navbar = (function(){
 				app.controller.deleteTarget('board');
 			});
 			
+			//수열
 			$('#arithBtn').click(()=>{
 				//$('#container').empty();
 				$('#title').text('시작값부터 끝값까지 등차수열 합!!');
@@ -192,7 +218,6 @@ meta.navbar = (function(){
 						$('#result_msg').text("결과보기: "+series.diffSeries($('#endVal').val()));
 					});
 				});
-				
 			});
 			$('#facBtn').click(()=>{
 				//$('#container').empty();
@@ -213,6 +238,109 @@ meta.navbar = (function(){
 				$('#result_btn').click(()=>{
 					$.getScript(algo, ()=>{
 						$('#result_msg').text("결과보기: "+series.fibonacci($('#startVal').val(), $('#endVal').val()));
+					});
+				});
+			});
+			
+			//배열
+			$('#selBtn').click(()=>{
+				$('#container').empty();
+				//drowUI
+				$('#container').html(algoUI.sort());
+				var $start = compUI.input('inputVal','text','');
+		        var $input_btn = compUI.input('input_btn','button','입력');
+		        var $rest_btn = compUI.input('res_btn','button','정렬하기');
+		        $('#inputLbl').after($start);
+		        $start.after($input_btn);
+		        $input_btn.after($rest_btn);
+				$('#title').text('선택정렬!!');
+				
+				var arr = new Array();
+				$('#input_btn').click(()=>{
+					arr.push($('#inputVal').val()*1);
+					var val='';
+					for(var i=0;i<=arr.length-1;i++){
+						val += arr[i]+" ";
+					}
+					
+					$.getScript(algo, ()=>{
+						$('#input_val').text("입력한 값: "+val);
+						$('#inputVal').val('');
+					});
+				});
+				
+				$('#res_btn').click(()=>{
+					$.getScript(algo, ()=>{
+						$('#res_sort').text("정렬결과: "+sort.selection(arr));
+					});
+				});
+			});
+			$('#burbleBtn').click(()=>{
+				$('#title').text('버블정렬!!');
+				
+				var arr = new Array();
+				$('#input_btn').click(()=>{
+					arr.push($('#inputVal').val()*1);
+					var val='';
+					for(var i=0;i<=arr.length-1;i++){
+						val += arr[i]+" ";
+					}
+					
+					$.getScript(algo, ()=>{
+						$('#input_val').text("입력한 값: "+val);
+						$('#inputVal').val('');
+					});
+				});
+				
+				$('#res_btn').click(()=>{
+					$.getScript(algo, ()=>{
+						$('#res_sort').text("정렬결과: "+sort.burble(arr));
+					});
+				});
+			});
+			$('#insertBtn').click(()=>{
+				$('#title').text('삽입정렬!!');
+				
+				var arr = new Array();
+				$('#input_btn').click(()=>{
+					arr.push($('#inputVal').val()*1);
+					var val='';
+					for(var i=0;i<=arr.length-1;i++){
+						val += arr[i]+" ";
+					}
+					
+					$.getScript(algo, ()=>{
+						$('#input_val').text("입력한 값: "+val);
+						$('#inputVal').val('');
+					});
+				});
+				
+				$('#res_btn').click(()=>{
+					$.getScript(algo, ()=>{
+						$('#res_sort').text("정렬결과: "+sort.insertion(arr));
+					});
+				});
+			});
+			$('#rankBtn').click(()=>{
+				$('#title').text('석차구하기!!');
+				
+				var arr = new Array();
+				$('#input_btn').click(()=>{
+					arr.push($('#inputVal').val()*1);
+					var val='';
+					for(var i=0;i<=arr.length-1;i++){
+						val += arr[i]+" ";
+					}
+					
+					$.getScript(algo, ()=>{
+						$('#input_val').text("입력한 값: "+val);
+						$('#inputVal').val('');
+					});
+				});
+				
+				$('#res_btn').click(()=>{
+					$.getScript(algo, ()=>{
+						$('#res_sort').text("정렬결과: "+sort.ranking(arr));
 					});
 				});
 			});

@@ -72,3 +72,73 @@ var series={
 			return sum;
 		}
 }
+
+var sort={
+		selection : (x)=>{
+			var temp='', val='', minidx=0;
+			//sort
+			for(var i=0; i<=x.length-1; i++){
+				minidx=i;
+				for(var j=i+1; j<=x.length-1; j++){
+					if(x[minidx] > x[j]){
+						minidx = j;
+					}
+				}
+				temp = x[minidx];
+				x[minidx] = x[i];
+				x[i] = temp;
+			} 
+			return x;
+		},
+		burble : (x)=>{
+			var temp='', val='', minidx=0;
+			//sort                                            
+			for(var i=0; i<=x.length-1; i++){
+				for(var j=i+1; j<=x.length-1; j++){
+					if(x[i] > x[j]){
+						temp = x[j];
+						x[j] = x[i];
+						x[i] = temp;
+					}
+				}
+			}
+			return x;
+		},
+		insertion : (x)=>{
+			var temp='', val='';
+			//sort                                            
+			for(var i=1; i<=x.length-1; i++){
+				var key = x[i];
+				
+				for(var j=i; j>0; j--){
+					if(x[j-1] > key){
+						temp = x[j];
+						x[j] = key;
+						key = temp;
+					}
+				}
+			}
+			return x;
+		},
+		ranking : (x)=>{
+			var rank = new Array();
+			var temp=0;
+	        for(var i=0; i<x.length; i++){
+	           rank[i] = 1;
+	        };
+
+	        for(var i=0; i<x.length; i++){
+	           for(var j=0; j<x.length; j++){
+	              if(x[i]<x[j]){
+	                 rank[i]++;
+	              };
+	           };
+	        };
+			
+	        return rank;
+		}
+}
+
+var mtx={}
+var math={}
+var appl={}
