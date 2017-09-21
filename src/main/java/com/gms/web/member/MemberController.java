@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.gms.web.command.CommandDTO;
+import com.gms.web.command.Command;
 import com.gms.web.compiex.PathFactory;
 import com.gms.web.grade.GradeService;
 import com.gms.web.grade.MajorDTO;
@@ -34,7 +34,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	@Autowired MemberService service;
 	@Autowired GradeService gService;
-	@Autowired CommandDTO cmd;
+	@Autowired Command cmd;
 	@Autowired BlockHandler blockHandler;
 	@Autowired PageHandler pageHandler;
 	@Autowired PageProxy pxy;

@@ -9,11 +9,11 @@
 		select count(*) as count from member
 	</select>
 	
-	<select id="login" resultType="com.gms.web.member.MemberDTO" parameterType="com.gms.web.command.CommandDTO">
+	<select id="login" resultType="com.gms.web.member.MemberDTO" parameterType="com.gms.web.command.Command">
 		select mem_id as id, pw from member where mem_id = #{search}
 	</select>
 	
-	<select id="selectAll" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.CommandDTO">
+	<select id="selectAll" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.Command">
 		select num, id, name, ssn, email, phone, subjs, regdate 
 		from (select @rnum := @rnum +1 as num, s.* 
 				from (select @rnum := 0) r, student s
@@ -21,7 +21,7 @@
 		where num between #{startRow} and #{endRow} 
 	</select>
 	
-	<select id="selectByID" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.CommandDTO">
+	<select id="selectByID" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.Command">
 		select id, name, ssn, email, phone, subjs, regdate from student where id = #{search}
 	</select>
 	
@@ -39,7 +39,7 @@
 		where mem_id = #{id}
 	</update>
 	
-	<delete id="delete" flushCache="true" parameterType="com.gms.web.command.CommandDTO">
+	<delete id="delete" flushCache="true" parameterType="com.gms.web.command.Command">
 		delete from member where mem_id = #{search}
 	</delete>
 </mapper>

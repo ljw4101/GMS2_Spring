@@ -25,31 +25,70 @@ meta.index=(function(){
 		
 		$container=$('#container');
 		onCreate();
-		//meta.ui.init();
 	};
 	
 	var onCreate = function(){
 		//setContextView(); 이벤트와 $.getScript scope이 달라서 onCreate에 하나로 작동하게 함
 		$.getScript(temp, ()=>{
-			$container.append(compUI.div('content'));
-			$('#content').css({'margin': 'auto', 'width': '40%'});
+			compUI.div('content').css({'margin': 'auto', 'width': '40%'}).appendTo($container);
+			$content = $('#content');
+			compUI.image('loading', img+'/loading.gif').appendTo($content);
+			compUI.h3('hbtn').attr('displsy','inline').appendTo($content);
+			$hbtn = $('#hbtn');
 			
-			var $image = compUI.image('loading', img+'/loading.gif');
-			$('#content').append($image);
-			
-			$('#loading').after(compUI.h1('h-btn'));
-			$('#h-btn').append(compUI.span('btn_load')).attr('displsy','inline');
+			$hbtn.append(compUI.span('btn_load')).attr('displsy','inline');
 			$('#btn_load').html('버튼').addClass('label label-info');
-			
-			$('#h-btn').append(compUI.span('algoBtn')).attr('displsy','inline');
+			$hbtn.append(compUI.span('algoBtn')).attr('displsy','inline');
 			$('#algoBtn').html('알고리즘').addClass('label label-default').css({'margin-left':'10px'});
-			$('#h-btn').append(compUI.span('membtn')).attr('displsy','inline');
+			$hbtn.append(compUI.span('membtn')).attr('displsy','inline');
 			$('#membtn').html('회원관리').addClass('label label-primary').css({'margin-left':'10px'});
-			$('#h-btn').append(compUI.span('boardbtn')).attr('displsy','inline');
-			$('#boardbtn').html('게시판').addClass('label label-success').css({'margin-left':'10px'});
-			$('#h-btn').append(compUI.span('btn5')).attr('displsy','inline');
-			$('#btn5').html('버튼').addClass('label label-warning').css({'margin-left':'10px'});
-			$('#h-btn').append(compUI.span('btn6')).attr('displsy','inline');
+			
+			//함수형 프로그래밍 코딩방식
+			compUI.span('boardbtn').html('게시판').addClass('label label-success').css({'margin-left':'10px'})
+			.appendTo($hbtn)
+			.click(()=>{
+				$container.empty();
+				var url = ctx+'/get/board/list'; //get(read):생략가능
+				$.getJSON(url, x=>{
+					alert('x msg is '+x.list);
+					$container.html(boardUI.list());
+					//search
+					compUI.input('search','text','').addClass('form-control').appendTo('#input_grp').attr('placeholder','Search for...');
+					compUI.input('searchBtn','button','Go!').addClass('btn btn-default').appendTo('#input_grp_btn');
+					
+					//table
+					var arr = ['No!','제목','내용','글쓴이','등록일','조회수'];
+					var th='', td='';
+					$.each(arr, (idx, val)=>{
+						th += '<th>'+val+'</th>';
+					});
+					$('#tr_title').html(th);
+					
+					$.each(arr, (idx, val)=>{
+						td += '<td>'+idx+'</td>';
+					});
+					$('#tr_data').html(td);	
+					
+					//navbar
+					var arr = [1,2,3,4,5];
+					var li = '';
+					//compUI.aBtn('aforemost').addClass('glyphicon glyphicon-fast-backward').appendTo('#pgforemost');
+					//compUI.aBtn('aforemost').getAttribute('aria-label','Previous').appendTo('#pgprev');
+					
+					/*$.each(arr, (idx, val)=>{
+						li += '<li>'+val+'</li>';
+					});
+					$('#page_form').html(li);*/
+					
+					//compUI.aBtn('atail').addClass('glyphicon glyphicon-fast-forward').appendTo('#pgtail');
+					
+
+				});
+			});
+			
+			$hbtn.append(compUI.span('gradebtn')).attr('displsy','inline');
+			$('#gradebtn').html('성적관리').addClass('label label-warning').css({'margin-left':'10px'});
+			$hbtn.append(compUI.span('btn6')).attr('displsy','inline');
 			$('#btn6').html('버튼').addClass('label label-danger').css({'margin-left':'10px'});
 			
 			$('#algoBtn').click(()=>{
@@ -70,9 +109,13 @@ meta.index=(function(){
 					alert('로그인');
 				});
 			});
-			$('#boardbtn').click(()=>{
-				alert('board');
+			
+			$('#gradebtn').click(()=>{
 				$container.empty();
+				var url = ctx+'/get/grade/list';
+				$.getJSON(url, x=>{
+					alert('x msg is '+x.msg);
+				});
 				//meta.navbar.init();
 			});
 		});

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.gms.web.command.CommandDTO;
+import com.gms.web.command.Command;
 import com.gms.web.member.MemberDTO;
 import com.gms.web.member.StudDTO;
 
@@ -13,13 +13,13 @@ import com.gms.web.member.StudDTO;
 public interface MemberMapper {
 	public int insert(MemberDTO member);
 	public int update(MemberDTO member);
-	public int delete(CommandDTO cmd);
+	public int delete(Command cmd);
 	//getter
-	public List<?> selectAll(CommandDTO cmd);
+	public List<?> selectAll(Command cmd);
 	public String count();
-	public StudDTO selectByID(CommandDTO cmd);
-	public List<?> selectByName(CommandDTO cmd);
+	public StudDTO selectByID(Command cmd);
+	public List<?> selectByName(Command cmd);
 	
 	//login용 selectByID
-	public MemberDTO login(CommandDTO cmd); //generic으로 쓰기 위해 CommandDTO으로 변경 
+	public MemberDTO login(Command cmd); //generic으로 쓰기 위해 CommandDTO으로 변경 
 }

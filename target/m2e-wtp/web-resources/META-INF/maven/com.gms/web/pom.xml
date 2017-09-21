@@ -224,29 +224,27 @@
           <version>1.4</version>
       </dependency>
             
-            
-            
       <!--mariadb  -->
-      <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
       <dependency>
           <groupId>org.mariadb.jdbc</groupId>
           <artifactId>mariadb-java-client</artifactId>
           <version>${mariadb-java-client}</version>
       </dependency>
             
-           <!-- aop  -->      
-         <dependency>
-             <groupId>org.springframework</groupId>
-             <artifactId>spring-aop</artifactId>
-             <version>4.3.10.RELEASE</version>
-         </dependency>
+      <!-- aop  -->      
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-aop</artifactId>
+          <version>4.3.10.RELEASE</version>
+      </dependency>
       <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjweaver</artifactId>
           <version>1.8.10</version>
       </dependency>
      
-     <dependency>
+      <!-- jackson  -->     
+      <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
           <version>2.9.0</version>

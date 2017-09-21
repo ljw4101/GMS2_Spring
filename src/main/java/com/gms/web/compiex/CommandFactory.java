@@ -8,8 +8,8 @@ import com.gms.web.constant.Action;
 //CommonController 관계: 명렁어 생성(메뉴얼 작성자) / MoveCommand 관계: 생산자
 @Component
 public class CommandFactory {
-	public static CommandDTO createCommand(String dir, String action, String page, String pageNumber, String column, String search){
-		CommandDTO cmd=null; //sub객체를 인스턴스화하기 위해 생성
+	public static Command createCommand(String dir, String action, String page, String pageNumber, String column, String search){
+		Command cmd=null; //sub객체를 인스턴스화하기 위해 생성
 		
 		if(action==null){ action=Action.MOVE; }
 		

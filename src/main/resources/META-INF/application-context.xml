@@ -18,10 +18,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
-	<context:annotation-config />
+	<context:annotation-config /> <!-- @ 관련 -->
 	<!-- <beans:beans>구조를 사용하지 않기 위해서 servlet-context.xml 내용을 가져옴 & servlet-context.xml은 지운다 -->
-	<mvc:annotation-driven />
-	<tx:annotation-driven />
+	<mvc:annotation-driven /> <!-- 통신관련 ex)RequestMapping -->
+	<tx:annotation-driven /> <!-- 트랜젝션 관련 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<!-- 트랜잭션 관리자 -->

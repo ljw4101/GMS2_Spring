@@ -1,9 +1,17 @@
+//이벤트를 걸기 위해 DOM으로 만듦
 var compUI={
+	br : ()=>{return $('<br/>')},
 	div : x=>{return $('<div/>',{ id : x });},
+	h1 : x=>{return $('<h1/>',{ id : x });},
+	h2 : x=>{return $('<h2/>',{ id : x });},
+	h3 : x=>{return $('<h3/>',{ id : x });},
+	span : x=>{return $('<span/>',{ id : x });},
+	input : (x,y,z)=>{return $('<input/>',{ id : x, name: x, type : y, value : z });},
+	aBtn : x=>{return $('<a>',{ href:'#', role:'button', id:x });},
 	image : (x,y)=>{return $('<img/>',{ id : x, src : y });},
-	input : (x,y,z)=>{return $('<input/>',{ id : x, type : y, value : z });},
-	h1 : x=>{return $('<h3/>',{ id : x });},
-	span : x=>{return $('<span/>',{ id : x });}
+	
+	td : ()=>{return $('<td/>');},
+	li : ()=>{return $('<li/>');}
 }
 
 var introUI={
@@ -110,6 +118,48 @@ var introUI={
 			+ '</div>';
 	}
 };
+
+var boardUI = {
+		list : ()=>{
+			return '<div id="boardContent">'
+			+ '  <div class="row">'
+			+ '     <div class="col-lg-6" style="width:500px; margin-left: 30%;" >'
+			+ '       <div id="input_grp" class="input-group">'
+			//+ '         <input id="search" name="search" type="text" class="form-control" placeholder="Search for...">'
+			+ '         <span id="input_grp_btn" class="input-group-btn">'
+			//+ '           <button class="btn btn-default" type="button" onclick="">Go!!</button>'
+			+ '         </span>'
+			+ '       </div>'
+			+ '     </div>'
+			+ '   </div>'
+			+ '   <div style="height: 40px; width: 100%; text-align: center;"> 게시글 수 : </div>'
+			+ '   <table id="board-tab" style="margin-top: 50px; margin-bottom: auto; margin-right: auto; margin-left: auto; width: 70%; border-collapse: collapse;">'
+			+ '      <tr id="tr_title" style="height: 25px;">'
+			+ '      </tr>'
+			+ '      <tr id="tr_data" style="height: 25px;">'
+			+ '      </tr>'
+			+ '   </table>'
+			+ '   <nav aria-label="Page navigation" style="width:380px; margin:auto">'
+			+ '      <ul id="page_form" class="pagination">'
+			//+ '         <li id="pgforemost"></li>'
+			+ '			<li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>'
+			//+ '         <li id="pgprev"></li>'
+			+ '			<li><a onclick="" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+			+ '         <li class="active"><a href="#">1</a></li>'
+			+ '         <li><a onclick="">2</a></li>'
+			+ '         <li><a onclick="">3</a></li>'
+			+ '         <li><a onclick="">4</a></li>'
+			+ '         <li><a onclick="">5</a></li>'
+			+ '         <li id="pgnext"></li>'
+			+ '			<li><a onclick="" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
+			//+ '         <li id="pgtail"></li>'
+			+ '			<li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>'
+			+ '     </ul>'
+			+ '   </nav>'
+			+ '</div>'
+		}
+};
+
 
 var algoUI = {
 		series : ()=>{

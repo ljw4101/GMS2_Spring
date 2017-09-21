@@ -2,14 +2,14 @@ package com.gms.web.proxy;
 
 import org.springframework.stereotype.Component;
 
-import com.gms.web.command.CommandDTO;
+import com.gms.web.command.Command;
 
 //한 페이지의 rownum 범위
 //DB가기 전
 @Component
 public class PageHandler {
-	public static CommandDTO attr(PageProxy pxy){ //dependance: 객체를 전달
-		CommandDTO cmd = new CommandDTO();
+	public static Command attr(PageProxy pxy){ //dependance: 객체를 전달
+		Command cmd = new Command();
 		
 		System.out.println("============1 Command getPageNumber:" +pxy.getPageNumber());
 		System.out.println("============1 Command getTheNumberOfRows:" +pxy.getTheNumberOfRows());

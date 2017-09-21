@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
-import com.gms.web.command.CommandDTO;
+import com.gms.web.command.Command;
 import com.gms.web.compiex.CommandFactory;
 
 @Component
 public class Separator {
-	public static CommandDTO cmd = new CommandDTO();
+	public static Command cmd = new Command();
 	
 	public static void init(HttpServletRequest request){
 		String servletPath = request.getServletPath(); //request가 건너온 경로
