@@ -30,7 +30,7 @@ meta.index=(function(){
 	var onCreate = function(){
 		//setContextView(); 이벤트와 $.getScript scope이 달라서 onCreate에 하나로 작동하게 함
 		$.getScript(temp, ()=>{
-			compUI.div('content').css({'margin': 'auto', 'width': '40%'}).appendTo($container);
+			compUI.div('content').css({'margin': 'auto', 'width': '100%'}).appendTo($container);
 			$content = $('#content');
 			compUI.image('loading', img+'/loading.gif').appendTo($content);
 			compUI.h3('hbtn').attr('displsy','inline').appendTo($content);
@@ -43,47 +43,11 @@ meta.index=(function(){
 			$hbtn.append(compUI.span('membtn')).attr('displsy','inline');
 			$('#membtn').html('회원관리').addClass('label label-primary').css({'margin-left':'10px'});
 			
-			//함수형 프로그래밍 코딩방식
 			compUI.span('boardbtn').html('게시판').addClass('label label-success').css({'margin-left':'10px'})
 			.appendTo($hbtn)
 			.click(()=>{
-				$container.empty();
-				var url = ctx+'/get/board/list'; //get(read):생략가능
-				$.getJSON(url, x=>{
-					alert('x msg is '+x.list);
-					$container.html(boardUI.list());
-					//search
-					compUI.input('search','text','').addClass('form-control').appendTo('#input_grp').attr('placeholder','Search for...');
-					compUI.input('searchBtn','button','Go!').addClass('btn btn-default').appendTo('#input_grp_btn');
-					
-					//table
-					var arr = ['No!','제목','내용','글쓴이','등록일','조회수'];
-					var th='', td='';
-					$.each(arr, (idx, val)=>{
-						th += '<th>'+val+'</th>';
-					});
-					$('#tr_title').html(th);
-					
-					$.each(arr, (idx, val)=>{
-						td += '<td>'+idx+'</td>';
-					});
-					$('#tr_data').html(td);	
-					
-					//navbar
-					var arr = [1,2,3,4,5];
-					var li = '';
-					//compUI.aBtn('aforemost').addClass('glyphicon glyphicon-fast-backward').appendTo('#pgforemost');
-					//compUI.aBtn('aforemost').getAttribute('aria-label','Previous').appendTo('#pgprev');
-					
-					/*$.each(arr, (idx, val)=>{
-						li += '<li>'+val+'</li>';
-					});
-					$('#page_form').html(li);*/
-					
-					//compUI.aBtn('atail').addClass('glyphicon glyphicon-fast-forward').appendTo('#pgtail');
-					
-
-				});
+				$content.empty();
+				meta.board.list();
 			});
 			
 			$hbtn.append(compUI.span('gradebtn')).attr('displsy','inline');
@@ -128,6 +92,210 @@ meta.index=(function(){
 
 
 /*******************************
+ * board 기능
+ *******************************/
+meta.board=(()=>{
+	var $container, ctx, js, temp;
+	var init = function(){
+		ctx = $$('x');
+		js=$$('j');
+		temp=js+'/templet.js';
+		$container = $('#container');
+	};
+	
+	var list = x=>{
+		init();
+		
+		var url = ctx+'/list/board'; //get(read):생략가능
+		$.getJSON(url, data=>{
+			$content.html(boardUI.search());
+			var tbl = boardUI.tbl();
+			var tr ='';
+			/* 배열 형태
+			 * var a=[
+				{ a:1, b:'한국인사', c:'안녕', d:'길동', e:'2017-09-10', f:10},
+				{ a:2, b:'미국인사', c:'hello', d:'마이클', e:'2017-09-10', f:10},
+				{ a:3, b:'중국인사', c:'니하오', d:'길동', e:'2017-09-10', f:10},
+				{ a:4, b:'일본인사', c:'곤니찌와', d:'길동', e:'2017-09-10', f:10},
+				{ a:5, b:'태국인사', c:'사와디캅', d:'길동', e:'2017-09-10', f:10}
+			];
+			alert('x msg is '+data.result); */
+			$('#lbltotal').html(data.total.count);
+			
+			$.each(data.list, (i,j)=>{
+				tr += '<tr class="tr_height">'
+					+ '<td>'+j.articleSeq+'</td>'
+					+ '<td><a onclick="meta.board.detail('+j.articleSeq+')">'+j.title+'</a></td>'
+					+ '<td>'+j.content+'</td>'
+					+ '<td>'+j.id+'</td>'
+					+ '<td>'+j.regdate+'</td>'
+					+ '<td>'+j.hitcount+'</td>'
+					+ '</tr>'
+			});
+			
+			//console.log('tr : '+tr);
+			$content.append(tbl);
+			$('#tbody').html(tr);
+			$content.append(boardUI.pgnavbar());
+			
+			$('#btnWrite').click(()=>{
+				alert('글쓰기');
+				$.getScript(temp,()=>{
+					$container.empty();
+					compUI.div('content').css({'margin': 'auto', 'width': '100%'}).appendTo($container);
+					$('#content').html(boardUI.detail());
+		        });
+			});
+
+		});
+	};
+	
+	var detail = x=>{
+		init(); 
+		var url = ctx + '/get/board/'+x;
+		$.getJSON(url, data=>{
+			$.getScript(temp,()=>{
+				compUI.div('content').css({'margin': 'auto', 'width': '100%'}).appendTo($container);
+				$('#content').html(boardUI.detail());
+				$('#headTitle').html('게시글 보기');
+				
+				$('#fname').val(data.detail.title);
+				$('#lname').val(data.detail.id);
+				$('#regdate').val(data.detail.regdate);
+				$('#message').val(data.detail.content);
+				var _seq = data.detail.articleSeq;
+				var _writer = $('#lname').val();
+				
+				$('#btnConfirm').html('수 정')
+				.click( e =>{
+					e.preventDefault(); //form 태그의 submit 기능을 막음
+					
+					$('#headTitle').html('게시글 수정');
+					$('#btnConfirm').html('확 인').click( e =>{
+						e.preventDefault(); //submit 기능을 막음
+						update(_seq);
+					});
+					$('#btnCancel').html('취 소').attr('id','btnReset').attr('type', 'reset').removeAttr('data-toggle').removeAttr('data-target');
+				});
+				
+				$('#btnCancel').attr('data-toggle','modal').attr('data-target','#modal').addClass('btn','btn-primary').html('삭 제')
+				.click( e=>{
+					e.preventDefault(); //submit 기능을 막음
+					$('#btnDelete').click( e=>{
+						e.preventDefault();
+						var _pass = $('#pwd').val();
+						alert(_pass);
+						deleteArticle({
+							'articleSeq' : _seq,
+							'title' : _pass,
+							'id' : _writer
+						});
+					});
+				});
+	        });
+		});
+	};
+	
+	var update = x=>{
+		init();
+		
+		var _title = $('#fname').val();
+		var _writer = $('#lname').val();
+		var _message = $('#message').val();
+		
+		$.ajax({
+			url : ctx+'/put/board',
+			method : 'post',
+			dataType : 'json',
+			data : JSON.stringify({
+				//name은 Bean과 명칭이 동일해야 함
+				'articleSeq' : x,
+				'title' : _title,
+				'id' : _writer,
+				'content' : _message
+			}),
+			contentType : 'application/json',  //html body문법
+			success : d=>{
+				alert('ajax 통신 성공'+d.msg);
+				detail(x);
+			},
+			error : (x,s,m)=>{
+				alert('글 수정시 에러발생! '+m);
+			}
+		});
+	};
+	
+	var deleteArticle = x=>{
+		init();
+		
+		$.ajax({
+			url : ctx+'/delete/board',
+			method : 'post',
+			dataType : 'json',
+			data : JSON.stringify(x),
+			contentType : 'application/json',  //html body문법
+			success : d=>{
+				if(d.msg==="success"){
+					alert('삭제 성공!');
+					list();
+				}else{
+					alert('비밀번호가 다릅니다.');
+				}
+			},
+			error : (x,s,m)=>{
+				alert('글 수정시 에러발생! '+m);
+			}
+		});
+	};
+	
+	return {
+		list : list,
+		detail : detail,
+		update : update
+	};
+})();
+
+
+/*******************************
+ * auth
+ *******************************/
+meta.auth=(function(){
+	var $wrapper, $container, ctx, img, js, css, temp;
+	var init = function(){
+		$container = $('#container');
+		img = $$('i');
+		js=$$('j');
+		temp=js+'/templet.js';
+		onCreate();
+	};
+	
+	var onCreate = function(){
+		$.getScript(temp, ()=>{
+			$container.html(introUI.login(img));
+			
+			$('#login').append(meta.comp.input(
+					{
+						id : 'login_btn',
+						type : 'submit',
+						value : 'LOGIN'
+					}
+				));
+			$('#login').append(meta.comp.input(
+					{
+						id : 'cancel_btn',
+						type : 'reset',
+						value : 'CANCEL'
+					}
+				));
+		});		
+	};
+	
+	return {
+		init : init
+	};
+})();
+
+/*******************************
  * navbar
  *******************************/
 meta.navbar = (function(){
@@ -153,7 +321,6 @@ meta.navbar = (function(){
 	        $('#endLable').after($end);
 	        $end.after(result_btn);
 			
-	        
 			$navbar.html(introUI.navbar());
 			
 			var $nvb1 = $("#nab_ul_stu");
@@ -393,46 +560,6 @@ meta.navbar = (function(){
 	var setContextView = function(){ };
 	
 	return{
-		init : init
-	};
-})();
-
-
-/*******************************
- * auth
- *******************************/
-meta.auth=(function(){
-	var $wrapper, $container, ctx, img, js, css, temp;
-	var init = function(){
-		$container = $('#container');
-		img = $$('i');
-		js=$$('j');
-		temp=js+'/templet.js';
-		onCreate();
-	};
-	
-	var onCreate = function(){
-		$.getScript(temp, ()=>{
-			$container.html(introUI.login(img));
-			
-			$('#login').append(meta.comp.input(
-					{
-						id : 'login_btn',
-						type : 'submit',
-						value : 'LOGIN'
-					}
-				));
-			$('#login').append(meta.comp.input(
-					{
-						id : 'cancel_btn',
-						type : 'reset',
-						value : 'CANCEL'
-					}
-				));
-		});		
-	};
-	
-	return {
 		init : init
 	};
 })();

@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="selectByID" resultType="com.gms.web.member.StudDTO" parameterType="com.gms.web.command.Command">
-		select id, name, ssn, email, phone, subjs, regdate from student where id = #{search}
+		select id, pw, name, ssn, email, phone, subjs, regdate from student where id = #{search}
 	</select>
 	
 	<!-- CUD는 resultType이 없다 -->

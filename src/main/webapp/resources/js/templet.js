@@ -120,43 +120,135 @@ var introUI={
 };
 
 var boardUI = {
-		list : ()=>{
-			return '<div id="boardContent">'
-			+ '  <div class="row">'
-			+ '     <div class="col-lg-6" style="width:500px; margin-left: 30%;" >'
-			+ '       <div id="input_grp" class="input-group">'
-			//+ '         <input id="search" name="search" type="text" class="form-control" placeholder="Search for...">'
-			+ '         <span id="input_grp_btn" class="input-group-btn">'
-			//+ '           <button class="btn btn-default" type="button" onclick="">Go!!</button>'
-			+ '         </span>'
-			+ '       </div>'
-			+ '     </div>'
-			+ '   </div>'
-			+ '   <div style="height: 40px; width: 100%; text-align: center;"> 게시글 수 : </div>'
-			+ '   <table id="board-tab" style="margin-top: 50px; margin-bottom: auto; margin-right: auto; margin-left: auto; width: 70%; border-collapse: collapse;">'
-			+ '      <tr id="tr_title" style="height: 25px;">'
-			+ '      </tr>'
-			+ '      <tr id="tr_data" style="height: 25px;">'
-			+ '      </tr>'
-			+ '   </table>'
-			+ '   <nav aria-label="Page navigation" style="width:380px; margin:auto">'
-			+ '      <ul id="page_form" class="pagination">'
-			//+ '         <li id="pgforemost"></li>'
-			+ '			<li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>'
-			//+ '         <li id="pgprev"></li>'
-			+ '			<li><a onclick="" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
-			+ '         <li class="active"><a href="#">1</a></li>'
-			+ '         <li><a onclick="">2</a></li>'
-			+ '         <li><a onclick="">3</a></li>'
-			+ '         <li><a onclick="">4</a></li>'
-			+ '         <li><a onclick="">5</a></li>'
-			+ '         <li id="pgnext"></li>'
-			+ '			<li><a onclick="" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
-			//+ '         <li id="pgtail"></li>'
-			+ '			<li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>'
-			+ '     </ul>'
-			+ '   </nav>'
-			+ '</div>'
+		tbl : ()=>{
+			var tbl= '<table id="board-tab" class="table table-hover" style="width: 70%; margin: 0 auto; ">'
+		         +'<thead><tr class="hanbit-table tr" >';
+	         var a=[
+	            {width: '5%', txt:'No'},
+	            {width: '10%', txt:'제목'},
+	            {width: '30%', txt:'내용'},
+	            {width: '10%', txt:'글쓴이'},
+	            {width: '15%', txt:'등록일'},
+	            {width: '5%', txt:'조회수'}
+	            ];
+	         
+	            $.each(a, (i,j)=>{
+	               tbl+='<th style="width: '+j.width
+	               +'; text-align: center;">'+j.txt+'</th>'
+	            });
+	         
+	         tbl += '</tr></thead><tbody id="tbody">';
+	         tbl += '</tbody></table></div>';
+	         
+	         return tbl;
+		},
+		search : ()=>{
+			return '<div style="width:90%;margin:20px auto;">'
+		          +'	<select id="searchOption" class="form-control" name="searchOption" style="width:20%;float:left;margin-right:36px">'
+		          +'		<option value="searchByName" >작성자</option>'
+		          +'		<option value="searchByTitle">제목</option>'
+		          +'	</select>'
+		          +'	<div class="input-group" style="width:60%; float:left; margin-right:30px">'
+		          +'		<span class="input-group-addon">SEARCH</span>'
+		          +'		<input id="inputsearch" type="text" class="form-control" style="width:100%" name="searchWord" placeholder="작성자 또는 제목을  검색하여 주세요" >'
+		          +'	</div>'
+		          +'	<input class="btn btn-danger" style="width:100px" name="search" type="submit"  value="SEARCH"/>'
+		          +'	<input type="hidden" name="action" value="search"/>'
+		          +'	<input type="hidden" name="pageName" value="list" />'
+		          +'	<input type="hidden" name="pageNumber" value="1" />'
+		          +'</div>'
+			      +'<div style="margin:10px 0; margin-left:130px;" >'
+			      +'	<span><font color="sky-blue"><strong>총게시글수 : </strong></font></span>'
+			      +'	<label id="lbltotal" style="width:30%"></label>'
+			      +'	<input id="btnWrite" class="btn btn-warning" style="width:100px; margin-left:43%" type="submit" value="글쓰기">'
+			      +'</div>';
+		},
+		pgnavbar : ()=>{
+			return '   <nav aria-label="Page navigation" style="width:380px; margin:auto">'
+				+ '      <ul id="page_form" class="pagination">'
+				+ '         <li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a></li>'
+				+ '         <li><a onclick="" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>'
+				+ '         <li class="active"><a href="#">1</a></li>'
+				+ '         <li><a onclick="">2</a></li>'
+				+ '         <li><a onclick="">3</a></li>'
+				+ '         <li><a onclick="">4</a></li>'
+				+ '         <li><a onclick="">5</a></li>'
+				+ '         <li><a onclick="" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>'
+				+ '         <li><a onclick="" href="#"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a></li>'
+				+ '     </ul>'
+				+ '   </nav>'
+				+ '</div>'
+		},
+		detail : ()=>{
+			return '  <div class="page-header" style="margin-left: 10%">'
+				+ '      <h1 style="display: inline">게시판</h1>'
+				+ '      <a style="font-size: large;">목록가기</a>'
+				+ '   </div>'
+				+ '   <div class="container">'
+				+ '      <div class="row">'
+				+ '         <div class="col-md-12">'
+				+ '            <div class="well well-sm">'
+				+ '               <form class="form-horizontal" method="post">'
+				+ '                  <fieldset>'
+				+ '                     <legend id="headTitle" class="text-center header">게시글쓰기</legend>'
+				+ '                     <div class="form-group">'
+				+ '                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>'
+				+ '                        <div class="col-md-12">'
+				+ '                           <input id="fname" name="title" type="text" placeholder="제목" class="form-control" />'
+				+ '                        </div>'
+				+ '                     </div>'
+				+ '                     <div class="form-group">'
+				+ '                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>'
+				+ '                        <div class="col-md-12">'
+				+ '                           <input id="lname" name="name" type="text"  class="form-control" />'
+				+ '                        </div>'
+				+ '                     </div>'
+				+ '                     <div class="form-group">'
+				+ '                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>'
+				+ '                        <div class="col-md-12">'
+				+ '                           <input id="regdate" name="regdate" type="text" placeholder="등록일" class="form-control" readonly />'
+				+ '                        </div>'
+				+ '                     </div>'
+				+ '                     <div class="form-group">'
+				+ '                        <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>'
+				+ '                        <div class="col-md-12">'
+				+ '                           <textarea class="form-control" id="message" name="message" rows="15"></textarea>'
+				+ '                        </div>'
+				+ '                     </div>'
+				+ '                     '
+				+ '                     <div class="form-group">'
+				+ '                        <div class="col-md-12 text-center">'
+				+ '                           <button id="btnConfirm" type="submit" style="width: 200px" class="btn btn-primary btn-lg">확 인</button>'
+				+ '                           <button id="btnCancel" type="rest" style="width: 200px" class="btn btn-danger btn-lg">취 소</button>'
+				+ '                        </div>'
+				+ '                     </div>'
+				+ '                  </fieldset>'
+				+ '               </form>'
+				+ '            </div>'
+				+ '         </div>'
+				+ '      </div>'
+				+ '   </div>'
+				+ '<div class="modal fade alert" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">'
+				+ '<div class="modal-dialog">'
+				+ '<div class="modal-content">'
+				+ '<div class="modal-header">'
+				+ '	  <button type="button" class="close" data-dismiss="modal">'
+				+ '	  <span aria-hidden="true">x</span>'
+				+ '	  <span class="sr-only">Close</span></button>'
+				+ '   <h3 class="modal-title" id="modalLabel">정말 삭제하시겠습니까?</h3>'
+				+ '</div>'
+				+ '<div class="modal-body">'
+				+ '   <form>'
+				+ '      <div class="form-group">'
+				+ '         <label for="inputPass">Password</label>'
+				+ '         <input id="pwd" type="password" class="form-control" placeholder="Enter Password"/>'
+				+ '      </div>'
+				+ '      <button id="btnDelete" type="submit" style="width:200px;" class="btn btn-primary center-block">확 인</button>'
+				+ '   </form>'
+				+ '</div>'
+				+ '</div>'
+				+ '</div>'
+				+ '</div>'
 		}
 };
 
