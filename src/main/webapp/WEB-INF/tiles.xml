@@ -12,6 +12,7 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
 	</definition>	
 	
+	
 	<definition name="auth" template="/WEB-INF/views/common/layout.jsp">
 		<put-attribute name="title" value=""></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/common/navbar.jsp" />
@@ -21,6 +22,15 @@
 	<definition name="auth:*/*.tiles" extends="auth">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
 	</definition>
+	
+	
+	<definition name="no-tiles" template="/WEB-INF/views/common/no_template.jsp">
+		<put-attribute name="no-template" value=""></put-attribute>
+	</definition>
+	<definition name="*/*/*.jsp" extends="no-tiles">
+		<put-attribute name="no-template" value="/WEB-INF/views/{1}/{2}/{3}.jsp"></put-attribute>
+	</definition>
+	
 	
 	<definition name="move" template="/WEB-INF/views/common/layout.jsp">
 		<put-attribute name="title" value=""></put-attribute>
